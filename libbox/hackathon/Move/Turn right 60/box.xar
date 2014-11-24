@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheBox xar_version="3">
+    <Box name="root" id="3" localization="8" tooltip="Move along a trajectory given by an attached .pmt file." x="82" y="26">
+        <bitmap>media/images/box/movement/walk_forward.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.motion = ALProxy("ALMotion")
+        self.navigation = ALProxy("ALNavigation")
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        self.motion.move(0., 0., 0.)
+
+    def onInput_onStart(self):
+        relativePath = self.getParameter("Planar Move Trajectory")
+        if len(relativePath) == 0:
+            self.failure()
+            return
+
+        fm = ALProxy("ALFrameManager")
+        behaviorPath = fm.getBehaviorPath(self.behaviorId)
+        trajectoryPath = behaviorPath + relativePath
+
+        trajectoryData = str()
+        with open(trajectoryPath, 'r') as trajectoryFile:
+            trajectoryData = trajectoryFile.read()
+        trajectory = eval(trajectoryData)
+
+        if trajectory[0] != "Composed": # dealing with trajectories with radius
+            trajectory = trajectory[0]
+
+        result = self.navigation.moveAlong(trajectory)
+        if (result):
+            self.success()
+        else:
+            self.failure()
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was correctly executed." id="4" />
+        <Output name="failure" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was stopped to avoid collisions." id="5" />
+        <Parameter name="Planar Move Trajectory" inherits_from_parent="0" content_type="4" value="/behavior_1/planar/turn_right60.pmt" default_value="" tooltip="" id="6" />
+    </Box>
+</ChoregrapheBox>

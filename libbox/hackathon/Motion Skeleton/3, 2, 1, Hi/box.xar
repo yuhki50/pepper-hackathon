@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheBox xar_version="3">
+    <Box name="root" id="2" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="413" y="230">
+        <bitmap>media/images/box/movement/move.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline enable="1" fps="25" start_frame="1" end_frame="-1" size="280">
+            <BehaviorLayer name="move">
+                <BehaviorKeyframe name="keyframe20" index="20">
+                    <Diagram>
+                        <Box name="Move Along" id="3" localization="8" tooltip="Move along a trajectory given by an attached .pmt file." x="102" y="33">
+                            <bitmap>media/images/box/movement/walk_forward.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.motion = ALProxy("ALMotion")
+        self.navigation = ALProxy("ALNavigation")
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        self.motion.move(0., 0., 0.)
+
+    def onInput_onStart(self):
+        relativePath = self.getParameter("Planar Move Trajectory")
+        if len(relativePath) == 0:
+            self.failure()
+            return
+
+        fm = ALProxy("ALFrameManager")
+        behaviorPath = fm.getBehaviorPath(self.behaviorId)
+        trajectoryPath = behaviorPath + relativePath
+
+        trajectoryData = str()
+        with open(trajectoryPath, 'r') as trajectoryFile:
+            trajectoryData = trajectoryFile.read()
+        trajectory = eval(trajectoryData)
+
+        if trajectory[0] != "Composed": # dealing with trajectories with radius
+            trajectory = trajectory[0]
+
+        result = self.navigation.moveAlong(trajectory)
+        if (result):
+            self.success()
+        else:
+            self.failure()
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was correctly executed." id="4" />
+                            <Output name="failure" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was stopped to avoid collisions." id="5" />
+                            <Parameter name="Planar Move Trajectory" inherits_from_parent="0" content_type="4" value="/behavior_1/planar/turn_left30.pmt" default_value="" tooltip="" id="6" />
+                        </Box>
+                        <Link inputowner="3" indexofinput="2" outputowner="0" indexofoutput="1" />
+                    </Diagram>
+                </BehaviorKeyframe>
+                <BehaviorKeyframe name="keyframe105" index="105">
+                    <Diagram>
+                        <Box name="Move Along" id="1" localization="8" tooltip="Move along a trajectory given by an attached .pmt file." x="102" y="33">
+                            <bitmap>media/images/box/movement/walk_forward.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.motion = ALProxy("ALMotion")
+        self.navigation = ALProxy("ALNavigation")
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        self.motion.move(0., 0., 0.)
+
+    def onInput_onStart(self):
+        relativePath = self.getParameter("Planar Move Trajectory")
+        if len(relativePath) == 0:
+            self.failure()
+            return
+
+        fm = ALProxy("ALFrameManager")
+        behaviorPath = fm.getBehaviorPath(self.behaviorId)
+        trajectoryPath = behaviorPath + relativePath
+
+        trajectoryData = str()
+        with open(trajectoryPath, 'r') as trajectoryFile:
+            trajectoryData = trajectoryFile.read()
+        trajectory = eval(trajectoryData)
+
+        if trajectory[0] != "Composed": # dealing with trajectories with radius
+            trajectory = trajectory[0]
+
+        result = self.navigation.moveAlong(trajectory)
+        if (result):
+            self.success()
+        else:
+            self.failure()
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was correctly executed." id="4" />
+                            <Output name="failure" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was stopped to avoid collisions." id="5" />
+                            <Parameter name="Planar Move Trajectory" inherits_from_parent="0" content_type="4" value="/behavior_1/planar/turn_left30.pmt" default_value="" tooltip="" id="6" />
+                        </Box>
+                        <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="1" />
+                    </Diagram>
+                </BehaviorKeyframe>
+                <BehaviorKeyframe name="keyframe180" index="180">
+                    <Diagram>
+                        <Box name="Move Along" id="3" localization="8" tooltip="Move along a trajectory given by an attached .pmt file." x="82" y="26">
+                            <bitmap>media/images/box/movement/walk_forward.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        self.motion = ALProxy("ALMotion")
+        self.navigation = ALProxy("ALNavigation")
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        self.motion.move(0., 0., 0.)
+
+    def onInput_onStart(self):
+        relativePath = self.getParameter("Planar Move Trajectory")
+        if len(relativePath) == 0:
+            self.failure()
+            return
+
+        fm = ALProxy("ALFrameManager")
+        behaviorPath = fm.getBehaviorPath(self.behaviorId)
+        trajectoryPath = behaviorPath + relativePath
+
+        trajectoryData = str()
+        with open(trajectoryPath, 'r') as trajectoryFile:
+            trajectoryData = trajectoryFile.read()
+        trajectory = eval(trajectoryData)
+
+        if trajectory[0] != "Composed": # dealing with trajectories with radius
+            trajectory = trajectory[0]
+
+        result = self.navigation.moveAlong(trajectory)
+        if (result):
+            self.success()
+        else:
+            self.failure()
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was correctly executed." id="4" />
+                            <Output name="failure" type="1" type_size="1" nature="1" inner="0" tooltip="Stimulated if the trajectory was stopped to avoid collisions." id="5" />
+                            <Parameter name="Planar Move Trajectory" inherits_from_parent="0" content_type="4" value="/behavior_1/planar/turn_right60.pmt" default_value="" tooltip="" id="6" />
+                        </Box>
+                        <Link inputowner="3" indexofinput="2" outputowner="0" indexofoutput="1" />
+                    </Diagram>
+                </BehaviorKeyframe>
+            </BehaviorLayer>
+            <ActuatorList model="">
+                <ActuatorCurve name="value" actuator="HeadPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-10" />
+                    <Key frame="90" value="-10" />
+                    <Key frame="110" value="-35" />
+                    <Key frame="130" value="-10" />
+                    <Key frame="280" value="-10" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="HeadYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="30" />
+                    <Key frame="40" value="-30" />
+                    <Key frame="110" value="-30" />
+                    <Key frame="130" value="-40" />
+                    <Key frame="180" value="-40" />
+                    <Key frame="210" value="2.33139e-05" />
+                    <Key frame="280" value="2.33139e-05" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="HipPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-2" />
+                    <Key frame="280" value="-2" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="HipRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="0" />
+                    <Key frame="280" value="0" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="KneePitch" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="0" />
+                    <Key frame="280" value="0" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-30" />
+                    <Key frame="40" value="-75" />
+                    <Key frame="110" value="-75" />
+                    <Key frame="130" value="-50.0214" />
+                    <Key frame="180" value="-50.0214" />
+                    <Key frame="210" value="-90" />
+                    <Key frame="280" value="-90" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-80" />
+                    <Key frame="40" value="-30" />
+                    <Key frame="110" value="-30" />
+                    <Key frame="130" value="-54.963" />
+                    <Key frame="180" value="-54.963" />
+                    <Key frame="210" value="-10" />
+                    <Key frame="280" value="-10" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHand" recordable="1" mute="0" unit="1">
+                    <Key frame="10" value="1" />
+                    <Key frame="280" value="1" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="10" />
+                    <Key frame="40" value="30" />
+                    <Key frame="110" value="30" />
+                    <Key frame="130" value="40" />
+                    <Key frame="180" value="40" />
+                    <Key frame="210" value="89.7363" />
+                    <Key frame="280" value="89.7363" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="35" />
+                    <Key frame="40" value="15" />
+                    <Key frame="180" value="15" />
+                    <Key frame="210" value="50" />
+                    <Key frame="280" value="50" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LWristYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-100" />
+                    <Key frame="180" value="-100" />
+                    <Key frame="210" value="80" />
+                    <Key frame="280" value="80" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="70" />
+                    <Key frame="40" value="30" />
+                    <Key frame="90" value="30" />
+                    <Key frame="110" value="70" />
+                    <Key frame="130" value="20" />
+                    <Key frame="180" value="20" />
+                    <Key frame="210" value="70" />
+                    <Key frame="280" value="70" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="56.2" />
+                    <Key frame="40" value="90" />
+                    <Key frame="90" value="90" />
+                    <Key frame="110" value="75" />
+                    <Key frame="130" value="99.6448" />
+                    <Key frame="180" value="99.6448" />
+                    <Key frame="210" value="56.2295" />
+                    <Key frame="280" value="56.2295" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHand" recordable="1" mute="0" unit="1">
+                    <Key frame="10" value="0.0456942" />
+                    <Key frame="280" value="0.0456942" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="85" />
+                    <Key frame="40" value="-20" />
+                    <Key frame="110" value="-20" />
+                    <Key frame="130" value="40.0521" />
+                    <Key frame="180" value="40.0521" />
+                    <Key frame="210" value="85" />
+                    <Key frame="280" value="85" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-8.94222" />
+                    <Key frame="110" value="-8.94222" />
+                    <Key frame="130" value="-35" />
+                    <Key frame="180" value="-35" />
+                    <Key frame="210" value="-8.94222" />
+                    <Key frame="280" value="-8.94222" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RWristYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="10" value="-42.0983" />
+                    <Key frame="40" value="-4.22952e-05" />
+                    <Key frame="180" value="-4.22952e-05" />
+                    <Key frame="210" value="-42.0983" />
+                    <Key frame="280" value="-42.0983" />
+                </ActuatorCurve>
+            </ActuatorList>
+        </Timeline>
+    </Box>
+</ChoregrapheBox>
