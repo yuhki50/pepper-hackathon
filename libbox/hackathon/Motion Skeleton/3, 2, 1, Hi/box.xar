@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ChoregrapheBox xar_version="3">
-    <Box name="root" id="2" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="413" y="230">
+    <Box name="root" id="2" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="555" y="330">
         <bitmap>media/images/box/movement/move.png</bitmap>
         <script language="4">
             <content>
@@ -185,18 +185,10 @@
             <ActuatorList model="">
                 <ActuatorCurve name="value" actuator="HeadPitch" recordable="1" mute="0" unit="0">
                     <Key frame="10" value="-10" />
-                    <Key frame="90" value="-10" />
-                    <Key frame="110" value="-35" />
-                    <Key frame="130" value="-10" />
                     <Key frame="280" value="-10" />
                 </ActuatorCurve>
                 <ActuatorCurve name="value" actuator="HeadYaw" recordable="1" mute="0" unit="0">
-                    <Key frame="10" value="30" />
-                    <Key frame="40" value="-30" />
-                    <Key frame="110" value="-30" />
-                    <Key frame="130" value="-40" />
-                    <Key frame="180" value="-40" />
-                    <Key frame="210" value="2.33139e-05" />
+                    <Key frame="10" value="2.33139e-05" />
                     <Key frame="280" value="2.33139e-05" />
                 </ActuatorCurve>
                 <ActuatorCurve name="value" actuator="HipPitch" recordable="1" mute="0" unit="0">
